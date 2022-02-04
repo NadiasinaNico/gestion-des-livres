@@ -1,0 +1,88 @@
+{% extends "base.html.twig" %}
+
+{% block contenu %}
+	<h3 class="text-center text-primary">{{ livre.titre }}</h3>
+
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		{% if isModif %}
+			<form action="/livres/modificationLivre" method="POST">
+				<div class="row">
+					<div class="col-6">
+						<div class="form-group">
+							<label for="">Titre</label>
+							<input type="text" class="form-control" name="titre" value={{livre.titre}}>
+						</div>
+						<div class="form-group">
+							<label for="">Auteur</label>
+							<select name="auteur" id="auteur" class="form-control">
+								{% for auteur in auteurs %}
+									<option value="{{auteur._id}}" 
+									{% if auteur.id == livre.auteur._id %}
+									selected
+									{% endif %}
+									>
+										{{auteur.prenom}}
+										-
+										{{auteur.nom}}
+									</option>
+								{% endfor %}
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="">Page</label>
+							<input type="text" class="form-control" name="pages" value={{livre.page}}>
+						</div>
+					</div>
+					<div class="col-6">
+						<label for="">Description</label>
+						<textarea name="description" id="" cols="20" rows="6" class="form-control">{{ livre.description }}</textarea>
+					</div>
+				</div>
+				<input type="hidden" name="identifiant" value="{{livre._id}}">
+				<input type="submit" value="valider" class="btn btn-primary mt-2">
+			</form>
+			<form action="/livres/updateImages" method="POST" enctype="multipart/form-data">
+				<h3 class="text-center text-primary">Modification d'images</h3>
+				<div class="row">
+					<div class="col-5">
+						<img src="/images/{{livre.image}}" alt="image" width="50%">
+					</div>
+					<div class="col-7">
+						<div class="form-group">
+							<label for="">Image</label>
+							<input type="file" name="file" class="form-control-file">
+						</div>
+						<input type="hidden" name="identifiant" value="{{livre._id}}">
+						<input type="submit" class="btn btn-primary mt-3" value="modifier">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+{% else %}
+	<div class="row">
+		<div class="col-4">
+			<img src="/images/{{livre.image}}" alt="image" width="50%">
+		</div>
+		<div class="col-3">
+			<div class="text-success">Titre:
+				{{ livre.titre }}</div>
+			<div class="text-danger">Auteur:
+				<a href="/auteurs/{{livre.auteur._id}}">{{ livre.auteur.prenom }}
+					-
+					{{ livre.auteur.nom }}</a>
+			</div>
+			<div>{{ livre.page }}
+				pages</div>
+		</div>
+		<div class="col-5">
+			<div>Resume:
+				<p>
+					{{ livre.description }}</p>
+			</div>
+		</div>
+	</div>
+</div>{% endif %}{% endblock %}

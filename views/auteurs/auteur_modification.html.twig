@@ -1,0 +1,39 @@
+{% extends "base.html.twig" %}
+
+{% block contenu %}
+	<h3 class="text-center text-primary">Modification Auteur</h3>
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<form action="/auteurs/modification/" method="POST">
+				<div class="col-6">
+					<div class="form-group">
+						<label for="nom">Nom</label>
+						<input type="text" name="nom" class="form-control" value="{{auteur.nom}}">
+					</div>
+					<div class="form-group">
+						<label for="prenom">Prenom</label>
+						<input type="text" name="prenom" class="form-control" value="{{auteur.prenom}}">
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-group">
+						<label for="age">Age</label>
+						<input type="text" name="age" class="form-control" value="{{auteur.age}}">
+					</div>
+					<div class="form-check form-check-inline">
+						<input type="checkbox" class="form-check-input" id="sexe" name="sexe" 
+            {% if auteur.sexe %}checked {% endif %}>
+						<label for="sexe" class="form-check-label">Home</label>
+					</div>
+				</div>
+				<input type="hidden" name="identifiant" value="{{auteur._id}}">
+				<input type="submit" class="btn btn-success mt-2" value="valider">
+			</form>
+
+		</div>
+	</div>
+
+{% endblock %}

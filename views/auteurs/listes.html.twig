@@ -1,0 +1,64 @@
+{% extends "base.html.twig" %}
+
+{% block contenu %}
+	<h3 class="text-center text-primary">Listes des auteurs</h3>
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<table class="table text-center ">
+			<thead>
+				<tr class="table-dark">
+					<th>Nom</th>
+					<th>Prenom</th>
+					<th>Nombre de Livres</th>
+					<th>Sexe</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for auteur in auteurs %}
+					<tr>
+						<td>{{auteur.nom}}</td>
+						<td>{{auteur.prenom}}</td>
+						<td>{{auteur.livres | length}}</td>
+						<td>
+							{% if auteur.sexe %}
+								HOME
+							{% else %}
+								FEMME
+							{% endif %}
+						</td>
+						<td class="d-flex ">
+							<a href="/auteurs/modification/{{auteur._id}}" class="btn btn-primary">Modifier</a>
+							<form action="/auteurs/delete/{{auteur._id}}" method="POST">
+								<input type="submit" class="btn btn-danger" value="supprimer" onclick="suprimer()">
+							</form>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<button class="btn btn-success w-100" onclick="auteurAfficher()">Ajouter</button>
+		<form action="/auteurs/ajoutAuteur/" class="d-none" id="formAjoutAuteur" method="POST">
+			<div class="form-group">
+				<label for="nom">Nom</label>
+				<input type="text" name="nom" class="form-control">
+			</div>
+			<div class="form-group">
+				<label for="prenom">Prenom</label>
+				<input type="text" name="prenom" class="form-control">
+			</div>
+			<div class="form-group">
+				<label for="age">Age</label>
+				<input type="number" name="age" class="form-control">
+			</div>
+			<div class="form-check form-check-inline">
+				<input type="checkbox" class="form-check-input" id="sexe" name="sexe" checked>
+				<label for="sexe" class="form-check-label">Home</label>
+			</div>
+			<input type="submit" value="valider" class="btn btn-success mt-3">
+		</form>
+	</div>
+	<script src="javascript/auteurLivre.js"></script>
+{% endblock %}

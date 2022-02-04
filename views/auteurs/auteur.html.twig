@@ -1,0 +1,52 @@
+{% extends "base.html.twig" %}
+
+{% block contenu %}
+	<h3 class="text-center text-primary">Page d'auteur</h3>
+
+{% endblock %}
+{% block body %}
+	<div class="container">
+		<h2>Auteur
+			{{auteur.nom }}
+			-
+			{{auteur.prenom}}</h2>
+		<p>
+			Nom:
+			{{ auteur.nom }}</p>
+		<small>Prenom:
+			{{auteur.prenom}}</small>
+		<h4 class="text-primary">Age :
+			{{auteur.age}}
+			ans
+		</h4>
+		{% if auteur.sexe %}
+			<p>
+				sexe : Home</p>
+		{% else %}
+			<p>
+				sexe: Femme
+			</p>
+		{% endif %}
+		<div class="row">
+			{% for livre in auteur.livres %}
+				<div class="col-6">
+					<div class="row">
+						<div class="col-6">
+							<img src="/images/{{livre.image}}" alt="image" width="130px">
+						</div>
+						<div class="col-6">
+							<p>
+								Titre:
+								<a href="/livres/{{livre._id}}">
+									{{livre.titre}}
+								</a>
+							</p>
+							<p>{{livre.page}}
+								pages</p>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}
